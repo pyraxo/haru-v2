@@ -1,0 +1,53 @@
+{
+  "name": "fuyu",
+  "version": "1.0.0",
+  "description": "Discord command bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pyraxo/haru.git"
+  },
+  "keywords": [
+    "Discord",
+    "Bot"
+  ],
+  "author": "pyraxo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pyraxo/haru/issues"
+  },
+  "homepage": "https://github.com/pyraxo/haru#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "clear-require": "^1.0.1",
+    "discord.js": "github:hydrabolt/discord.js#indev",
+    "events": "^1.1.0",
+    "jsonfile": "^2.3.1",
+    "lodash": "^4.13.1",
+    "moment": "^2.13.0",
+    "node-base64-image": "^0.1.2",
+    "options-resolver": "^1.0.1",
+    "prettyjson": "^1.1.3",
+    "redis": "^2.6.0-2",
+    "require-all": "^2.0.0",
+    "tcp-ping": "^0.1.1",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "chai": "^3.5.0",
+    "eslint": "^2.10.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-changed": "^1.3.0",
+    "gulp-coffee": "^2.3.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",
+    "mocha": "^2.5.3"
+  }
+}
