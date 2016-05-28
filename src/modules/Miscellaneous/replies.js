@@ -83,6 +83,7 @@ class Replies extends BaseCommand {
     })
 
     this.hears(/^ay(y+)$/i, matches => {
+      if (channels.indexOf(this.channel.id) === -1) return
       this.send(this.channel, `lma${Array(matches[1].length + 1).join('o')}`)
     })
   }

@@ -10,7 +10,7 @@ class LMGTFY extends BaseCommand {
     return 'Let me Google that for you!'
   }
 
-  get aliases () {
+  static get aliases () {
     return [
       'google'
     ]

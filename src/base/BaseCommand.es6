@@ -27,7 +27,7 @@ class BaseCommand {
     throw new Error('Commands must have descriptions')
   }
 
-  get aliases () {
+  static get aliases () {
     return []
   }
 

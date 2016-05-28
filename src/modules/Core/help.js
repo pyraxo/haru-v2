@@ -78,7 +78,10 @@ class Help extends BaseCommand {
                     }
                   })
                 } else if (typeof command.usage === 'string') {
-                  reply = `${this.prefix}${command.usage}`
+                  reply = [`${this.prefix}${command.usage}`]
+                }
+                if (command.aliases) {
+                  reply.push(`Aliases: \`${command.aliases.join(', ')}\``)
                 }
               }
             }

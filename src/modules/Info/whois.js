@@ -11,7 +11,7 @@ class Whois extends BaseCommand {
     return 'Shows information of any user'
   }
 
-  get aliases () {
+  static get aliases () {
     return [
       'whoami'
     ]

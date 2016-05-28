@@ -22,12 +22,11 @@ class Dice extends BaseCommand {
         'dice AdX+B - Rolls A number of dice with X faces, adding B to the result',
         'dice AdX-B - Rolls A number of dice with X faces, subtracting B from the result'
       ],
-      'e.g. `dice 6d20-10`',
-      'Aliases: `rolldice, dice`'
+      'e.g. `dice 6d20-10`'
     ]
   }
 
-  get aliases () {
+  static get aliases () {
     return [
       'rolldice',
       'dice'

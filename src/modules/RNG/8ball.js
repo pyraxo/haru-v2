@@ -15,7 +15,7 @@ class EightBall extends BaseCommand {
     return 'Asks the eightball a question'
   }
 
-  get aliases () {
+  static get aliases () {
     return [
       'eightball'
     ]
@@ -24,8 +24,7 @@ class EightBall extends BaseCommand {
   static get usage () {
     return [
       'The **8 Ball** attempts to solve your problems with its 20 preset answers.',
-      ['**8ball <question>** will give an answer to your questions.'],
-      'Aliases: `eightball`'
+      ['**8ball <question>** will give an answer to your questions.']
     ]
   }
 

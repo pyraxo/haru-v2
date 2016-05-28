@@ -16,12 +16,11 @@ class Coinflip extends BaseCommand {
       'The **coinflip** command tosses coins and gives you the results.',
       ['**this.prefix coinflip [number of coins]**' +
       ' where the no. of coins flipped defaults to 1'],
-      'e.g. `coinflip 20`',
-      'Aliases: `cointoss, coins`'
+      'e.g. `coinflip 20`'
     ]
   }
 
-  get aliases () {
+  static get aliases () {
     return [
       'cointoss',
       'coins'
