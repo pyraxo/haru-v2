@@ -35,6 +35,10 @@ node_modules
 
 # Configuration directory
 config
+!config/discord.example.json
+!config/redis.json
 
 # Databases / Storage
 db
+!db/eightball.json
+!db/replies/replies.json
