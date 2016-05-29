@@ -94,6 +94,7 @@ class Credits extends BaseCommand {
                   if (matches[4]) {
                     receipt.push(`DESCRIPTION: ${matches[4]}`)
                   }
+                  receipt.push('```')
                   this.send(recipient, receipt.join('\n'))
                   this.reply(`Sent ${recipient.mention()} **${amt}** credits.`)
                 })

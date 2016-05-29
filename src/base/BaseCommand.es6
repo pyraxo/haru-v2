@@ -226,7 +226,7 @@ class BaseCommand {
     return commandInfo
   }
 
-  getMatches (content, regex, cb, noPrint) {
+  getMatches (content, regex, cb, print) {
     let matches = regex.exec(content)
 
     if (matches === null || !this.checkPrivateAndAdminOnly()) {
@@ -234,23 +234,22 @@ class BaseCommand {
     }
 
     let result = cb(matches)
-
-    if (!noPrint && result !== false) {
+    if (print && result !== false) {
       this.logger.debug(`\n${this.prettyPrint(regex, matches)}`)
     }
   }
 
   hears (regex, callback) {
-    let noPrint = !this.container.get('debug')
-    return this.getMatches(this.rawContent, regex, callback, noPrint)
+    let print = this.container.getParam('debug')
+    return this.getMatches(this.rawContent, regex, callback, print)
   }
 
   responds (regex, callback) {
     if (!this.isBotMentioned) {
       return
     }
-    let noPrint = !this.container.get('debug')
-    return this.getMatches(this.content, regex, callback, noPrint)
+    let print = this.container.getParam('debug')
+    return this.getMatches(this.content, regex, callback, print)
   }
 
 }
