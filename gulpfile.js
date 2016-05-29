@@ -16,7 +16,7 @@ var paths = {
 }
 
 gulp.task('coffee', function () {
-  return gulp.src(paths.coffee)
+  return gulp.src(paths.coffee, {dot: true})
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(coffee({bare: true})
@@ -28,7 +28,7 @@ gulp.task('coffee', function () {
 })
 
 gulp.task('babel', function () {
-  return gulp.src(paths.es6)
+  return gulp.src(paths.es6, {dot: true})
     .pipe(plumber())
     .pipe(changed(paths.es5))
     .pipe(sourcemaps.init())

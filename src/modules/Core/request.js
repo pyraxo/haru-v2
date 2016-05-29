@@ -23,12 +23,15 @@ class RQFeature extends BaseCommand {
         let admin = this.client.users.get('id', id)
         if (admin) {
           this.send(admin, [
-            `**${this.sender.name}** requested a new feature:\n`,
+            '```ruby',
+            '== Feature Request ==',
+            `Requester: ${this.sender.name}`,
+            '```',
             matches[1]
           ].join('\n'))
         }
       })
-      this.reply('Thank you for your input! ' +
+      this.reply('Thank you for your input!\n' +
       'The admins will be looking into your request shortly.')
     })
   }
