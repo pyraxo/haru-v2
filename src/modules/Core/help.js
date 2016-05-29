@@ -80,7 +80,7 @@ class Help extends BaseCommand {
                 } else if (typeof command.usage === 'string') {
                   reply = [`${this.prefix}${command.usage}`]
                 }
-                if (command.aliases) {
+                if (command.aliases.length > 0) {
                   reply.push(`Aliases: \`${command.aliases.join(', ')}\``)
                 }
               }

@@ -27,6 +27,51 @@ class Credits extends BaseCommand {
     ]
   }
 
+  generateReceipt (amount, from, to, description) {
+    let receipt = [
+      '```ruby',
+      '=== RECEIPT ===',
+      `FROM: ${from.name}`,
+      `AMOUNT: ${amount} credits`,
+      `FOR: ${to.name}`
+    ]
+    if (description) {
+      receipt.push(`DESCRIPTION:${description}`)
+    }
+    receipt.push('```')
+    return receipt.join('\n')
+  }
+
+  genTicket (amount, by, to, description) {
+    let receipt = [
+      '```ruby',
+      '=== NOTICE OF CREDIT ADJUSTMENT ===',
+      `BY: ${by.name}`,
+      `FOR: ${to.name}`,
+      `AMOUNT ADJUSTED TO: ${amount} credits`
+    ]
+    if (description) {
+      receipt.push(`DESCRIPTION:${description}`)
+    }
+    receipt.push('```')
+    return receipt.join('\n')
+  }
+
+  genAdjustment (amount, by, to, description) {
+    let receipt = [
+      '```ruby',
+      '=== NOTICE OF CREDIT ADJUSTMENT ===',
+      `BY: ${by.name}`,
+      `FOR: ${to.name}`,
+      `AMOUNT ADJUSTED BY: ${amount} credits`
+    ]
+    if (description) {
+      receipt.push(`DESCRIPTION:${description}`)
+    }
+    receipt.push('```')
+    return receipt.join('\n')
+  }
+
   handle () {
     this.responds(/^credits$/i, () => {
       Banker.getUser(this.sender, (err, amt) => {
@@ -84,18 +129,7 @@ class Credits extends BaseCommand {
                     this.reply('Error sending credits:\n' + err)
                     return
                   }
-                  let receipt = [
-                    '```ruby',
-                    '=== RECEIPT ===',
-                    `FROM: ${this.sender.name}`,
-                    `AMOUNT: ${amt} credits`,
-                    `FOR: ${recipient.name}`
-                  ]
-                  if (matches[4]) {
-                    receipt.push(`DESCRIPTION: ${matches[4]}`)
-                  }
-                  receipt.push('```')
-                  this.send(recipient, receipt.join('\n'))
+                  this.send(recipient, this.generateReceipt(amt, this.sender, recipient, matches[4]))
                   this.reply(`Sent ${recipient.mention()} **${amt}** credits.`)
                 })
               })
@@ -174,6 +208,57 @@ class Credits extends BaseCommand {
           })
         }
       })
+    })
+
+    this.responds(/^credits set <@!*(\d+)> (\d+)(\s.+)*$/i, matches => {
+      if (!this.isAdmin) return
+      let user = this.client.users.get('id', matches[1])
+      if (user) {
+        let amount = parseInt(matches[2], 10)
+        Banker.setCredits(matches[1], amount, (err, res) => {
+          if (err) {
+            this.logger.error(`${this.sender.name} met an error setting credits`, err)
+            this.reply('Error setting credits amount:\n' + err)
+            return
+          }
+          this.send(user, this.genTicket(amount, this.sender, user, matches[3]))
+          this.reply(`Set ${user.mention()}'s account to **${amount}** credits`)
+        })
+      }
+    })
+
+    this.responds(/^credits add <@!*(\d+)> (\d+)(\s.+)*$/i, matches => {
+      if (!this.isAdmin) return
+      let user = this.client.users.get('id', matches[1])
+      if (user) {
+        let amount = parseInt(matches[2], 10)
+        Banker.addCredits(matches[1], amount, (err, res) => {
+          if (err) {
+            this.logger.error(`${this.sender.name} met an error adding credits`, err)
+            this.reply('Error adding credits amount:\n' + err)
+            return
+          }
+          this.send(user, this.genAdjustment(amount, this.sender, user, matches[3]))
+          this.reply(`Added **${amount}** credits to ${user.mention()}'s account`)
+        })
+      }
+    })
+
+    this.responds(/^credits take <@!*(\d+)> (\d+)(\s.+)*$/i, matches => {
+      if (!this.isAdmin) return
+      let user = this.client.users.get('id', matches[1])
+      if (user) {
+        let amount = parseInt(matches[2], 10)
+        Banker.delCredits(matches[1], amount, (err, res) => {
+          if (err) {
+            this.logger.error(`${this.sender.name} met an error removing credits`, err)
+            this.reply('Error removing credits amount:\n' + err)
+            return
+          }
+          this.send(user, this.genAdjustment(-amount, this.sender, user, matches[3]))
+          this.reply(`Removed **${amount}** credits from ${user.mention()}'s account`)
+        })
+      }
     })
   }
 }

@@ -11,7 +11,11 @@ class Bank extends SDB {
   initUser (user, cb) {
     if (typeof user === 'object') user = user.id
     this.set(user, 100, (err, res) => {
-      cb(err, 100)
+      if (err) {
+        cb(err, res)
+      } else {
+        cb(err, 100)
+      }
     })
   }
 
