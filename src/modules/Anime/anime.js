@@ -24,9 +24,19 @@ class Anime extends BaseCommand {
   }
 
   genEntry (entry) {
+    let synopsis = entry.synopsis[0]
+    ? he.decode(entry.synopsis[0])
+    .replace(/<br\s*[\/]?>/gi, '')
+    .replace(/\[\/*i\]\s*/gi, '*')
+    .replace(/\[\/*b\]\s*/gi, '**')
+    : 'none'
+    if (synopsis.length > 500) {
+      synopsis = synopsis.substring(0, 500)
+      synopsis += '...'
+    }
     this.send(this.channel, [
       `\n:mag_right:  **${entry.title}**`,
-      entry.english ? `\n**English Title**: ${entry.english}` : '\n',
+      entry.english ? `\n**Alternate Title**: ${entry.english}` : '\n',
       `**Score**: ${entry.score}`,
       `**Episodes**: ${entry.episodes}`,
       `**Status**: ${entry.status}`,
@@ -34,12 +44,7 @@ class Anime extends BaseCommand {
       `**Start Date**: ${entry.start_date}`,
       `**End Date**: ${entry.end_date}`,
       `**Synopsis**: ${
-        entry.synopsis[0]
-        ? he.decode(entry.synopsis[0])
-        .replace(/<br\s*[\/]?>/gi, '')
-        .replace(/\[\/*i\]\s*/gi, '*')
-        .replace(/\[\/*b\]\s*/gi, '**')
-        : 'none'
+        synopsis
       }`,
       `http://myanimelist.net/anime/${entry.id}`
     ].join('\n'))
@@ -70,7 +75,7 @@ class Anime extends BaseCommand {
           return
         }
         if (entries.length > 10) entries.length = 10
-        let reply = ['**Please choose your desired show by entering its number:**']
+        let reply = ['**Please choose your desired show by entering its number:**\n']
         entries.forEach((elem, idx) => {
           reply.push(`${idx + 1}. ${elem.title}`)
         })
