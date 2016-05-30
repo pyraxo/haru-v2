@@ -122,7 +122,7 @@ class RIP extends BaseCommand {
         this.createImage(name)
       } else {
         if (user) {
-          this.altImage(this.sender)
+          this.altImage(user)
         }
       }
     })
