@@ -6,7 +6,7 @@ class BaseClient {
     this.container = container
   }
 
-  get name () {
+  static get name () {
     throw new Error('Clients must have names')
   }
 

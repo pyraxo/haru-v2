@@ -26,7 +26,6 @@ class Loader extends EventEmitter {
   start () {
     this.loadDiscord()
     this.on('loaded.discord', () => {
-      this.loadConfig()
       this.loadClients()
     })
   }
@@ -37,7 +36,7 @@ class Loader extends EventEmitter {
 
   setLoaded (type) {
     this.loaded[type] = true
-    this.emit('loaded' + type)
+    this.emit('loaded.' + type)
     this.emit('loaded')
   }
 
@@ -95,38 +94,20 @@ class Loader extends EventEmitter {
   }
 
   loadClients () {
-    let clients = rq({
-      dirname: path.join(process.cwd(), 'lib/clients'),
-      filter: /(.+)\.js$/
-    })
+    let clients = rq(path.join(process.cwd(), 'lib/clients'))
     for (let Client in clients) {
       if (clients.hasOwnProperty(Client)) {
+        Client = clients[Client]
         let client = new Client(this.container)
         try {
           client.run()
         } catch (err) {
-          this.logger.error(`Error running client ${client.name}`, err)
+          this.logger.error(`Error running client ${Client.name}`, err)
         }
-        this.container.set(client.name, client)
+        this.container.set(Client.name, client)
       }
     }
     this.setLoaded('clients')
-  }
-
-  loadConfig () {
-    let configPath = path.join(process.cwd(), 'config')
-    fs.readdir(configPath, (err, filenames) => {
-      if (err) this.logger.error('Error reading keys', err)
-      for (let filename in filenames) {
-        fs.readFile(path.join(configPath, filename), 'utf-8', (err, content) => {
-          if (err) this.logger.error(`Error reading file ${filename}`, err)
-          if (!filename.startsWith('.') && filename.indexOf('example') === -1) {
-            this.container.setParam(filename.substring(0, filename.indexOf('.')), content)
-          }
-        })
-      }
-    })
-    this.setLoaded('config')
   }
 }
 

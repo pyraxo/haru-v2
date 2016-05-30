@@ -28,6 +28,7 @@
     "chalk": "^1.1.3",
     "clear-require": "^1.0.1",
     "discord.js": "github:hydrabolt/discord.js#indev",
+    "discordie": "^0.6.5",
     "events": "^1.1.0",
     "gm": "^1.22.0",
     "he": "^1.1.0",
@@ -41,7 +42,8 @@
     "require-all": "^2.0.0",
     "superagent-xml2jsparser": "^0.1.1",
     "tcp-ping": "^0.1.1",
-    "winston": "^2.2.0"
+    "winston": "^2.2.0",
+    "ytdl-core": "^0.7.15"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
