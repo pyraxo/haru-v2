@@ -34,11 +34,7 @@ node_modules
 .node_repl_history
 
 # Configuration directory
-config
-!config/discord.example.json
-!config/redis.json
+config/discord.json
 
 # Databases / Storage
-db
-!db/eightball.json
-!db/replies/replies.json
+db/replies/reply_channels.json
