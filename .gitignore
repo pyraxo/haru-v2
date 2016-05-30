@@ -35,6 +35,8 @@ node_modules
 
 # Configuration directory
 config/discord.json
+config/redis.json
+config/mal.json
 
 # Databases / Storage
 db/replies/reply_channels.json

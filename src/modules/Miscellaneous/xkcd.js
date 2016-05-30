@@ -23,9 +23,10 @@ class XKCD extends BaseCommand {
     .end((err, res) => {
       if (err) {
         this.logger.error(`Error fetching XKCD comic: `, err)
-        return this.reply(`**Error**: XKCD query returned no pictures.`)
+        this.reply(`**Error**: XKCD query returned no pictures.`)
+        return
       }
-      return this.send(this.channel, [
+      this.send(this.channel, [
         `**${res.body.title}**`,
         `*${res.body.alt}*`,
         res.body.img

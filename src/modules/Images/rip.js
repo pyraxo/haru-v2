@@ -5,7 +5,14 @@ import Canvas, {Image as Image} from 'canvas'
 import base64 from 'node-base64-image'
 
 import BaseCommand from '../../base/BaseCommand'
-import ImageCacher from '../.Cache/ImageCacher'
+import ImageCacher from '../.Cache/Cache'
+
+let canvas = new Canvas(1920, 2160)
+let ctx = canvas.getContext('2d')
+
+let src = fs.readFileSync(path.join(process.cwd(), 'db/images/rip2.png'))
+let fg = new Image()
+fg.src = src
 
 class RIP extends BaseCommand {
   static get name () {
@@ -55,37 +62,28 @@ class RIP extends BaseCommand {
   }
 
   genImage (image) {
-    let canvas = new Canvas(1920, 2160)
-    let ctx = canvas.getContext('2d')
     let base = new Image()
     base.src = new Buffer(image, 'base64')
     ctx.drawImage(base, 440, 0, 1000, 1000)
-    fs.readFile(path.join(process.cwd(), 'db/images/rip2.png'), (err, src) => {
-      if (err) {
-        this.logger.error('Error reading alt rip base image', err)
-        return
-      }
-      let c = new Image()
-      c.src = src
-      ctx.drawImage(c, 0, 0, 1920, 2160)
-      let out = fs.createWriteStream(
-        path.join(process.cwd(), `db/images/${this.message.id}.png`)
-      )
-      let stream = canvas.pngStream()
+    ctx.drawImage(fg, 0, 0, 1920, 2160)
 
-      stream.on('data', chunk => {
-        out.write(chunk)
-      })
+    let out = fs.createWriteStream(
+      path.join(process.cwd(), `db/images/${this.message.id}.png`)
+    )
+    let stream = canvas.pngStream()
 
-      stream.on('end', () => {
-        setTimeout(() => {
-          this.upload(
-            path.join(process.cwd(), `db/images/${this.message.id}.png`), 'dead.png'
-          ).then(() => {
-            fs.unlink(path.join(process.cwd(), `db/images/${this.message.id}.png`))
-          })
-        }, 500)
-      })
+    stream.on('data', chunk => {
+      out.write(chunk)
+    })
+
+    stream.on('end', () => {
+      setTimeout(() => {
+        this.upload(
+          path.join(process.cwd(), `db/images/${this.message.id}.png`), 'dead.png'
+        ).then(() => {
+          fs.unlink(path.join(process.cwd(), `db/images/${this.message.id}.png`))
+        })
+      }, 500)
     })
   }
 
