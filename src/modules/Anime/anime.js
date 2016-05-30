@@ -37,8 +37,8 @@ class Anime extends BaseCommand {
         entry.synopsis[0]
         ? he.decode(entry.synopsis[0])
         .replace(/<br\s*[\/]?>/gi, '')
-        .replace(/\[\/*i\]/gi, '*')
-        .replace(/\[\/*b\]/gi, '**')
+        .replace(/\[\/*i\]\s*/gi, '*')
+        .replace(/\[\/*b\]\s*/gi, '**')
         : 'none'
       }`,
       `http://myanimelist.net/anime/${entry.id}`
@@ -75,11 +75,16 @@ class Anime extends BaseCommand {
         })
         this.client.awaitResponse(this.message, reply.join('\n'))
         .then(msg => {
-          let num = parseInt(msg.content, 10) - 1
-          if (num >= entries.length) {
-            num = entries.length - 1
+          if (entries.length > 10) entries.length = 10
+          if (!/^\d+$/.test('10')) {
+            this.reply('That is an invalid response.')
+            return
           }
-          this.genEntry(entries[num])
+          let num = parseInt(msg.content, 10)
+          if (num > 10) {
+            this.reply('There\'s no anime entry with that index!')
+          }
+          this.genEntry(entries[num - 1])
         })
       })
     })
