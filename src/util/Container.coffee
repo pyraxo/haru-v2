@@ -27,7 +27,7 @@ class Container
 
   save: (cb) ->
     if @filename?
-      jsonfile.writeFile @filename, @db, { spaces: 2 }, err ->
+      jsonfile.writeFile @filename, @db, { spaces: 2 }, (err) ->
         if err? then cb? err
 
   hasParam: (key) ->

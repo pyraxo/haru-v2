@@ -4,9 +4,10 @@ import _ from 'lodash'
 
 import BaseCommand from '../../base/BaseCommand'
 import FDB from '../../util/FlatDatabase'
+import DL from '../../util/Datalist'
 
 let replies = new FDB(path.join(process.cwd(), 'db/replies/replies.json')).getAll()
-let channels = new FDB(path.join(process.cwd(), 'db/replies/reply_channels.json')).getAll()
+let rc = new DL(path.join(process.cwd(), 'db/replies/reply_channels.json'))
 
 class Replies extends BaseCommand {
   static get name () {
@@ -47,7 +48,7 @@ class Replies extends BaseCommand {
   }
 
   hearExpression (exp) {
-    if (channels.indexOf(this.channel.id) > -1) {
+    if (rc.has(this.channel.id)) {
       this.hears(new RegExp(`\^${escape(exp)}\$`, 'i'), () => {
         let reply = ''
         let r = replies[exp]
@@ -74,16 +75,16 @@ class Replies extends BaseCommand {
     })
 
     this.responds(/^replies$/i, () => {
-      if (channels.indexOf(this.channel.id) > -1) {
-        _.pull(channels, this.channel.id)
+      if (rc.has(this.channel.id)) {
+        rc.del(this.channel.id)
         this.reply('Banned replies on this channel.')
       } else {
-        channels.push(this.channel.id)
+        rc.push(this.channel.id)
         this.reply('Allowed replies on this channel.')
       }
     })
 
-    if (channels.indexOf(this.channel.id) > -1) {
+    if (rc.has(this.channel.id)) {
       this.hears(/^ay(y+)$/i, matches => {
         this.send(this.channel, `lma${Array(matches[1].length + 1).join('o')}`)
       })
