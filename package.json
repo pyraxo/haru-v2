@@ -24,10 +24,12 @@
   "dependencies": {
     "babel-core": "^6.9.0",
     "babel-polyfill": "^6.9.0",
+    "canvas": "^1.3.15",
     "chalk": "^1.1.3",
     "clear-require": "^1.0.1",
     "discord.js": "github:hydrabolt/discord.js#indev",
     "events": "^1.1.0",
+    "gm": "^1.22.0",
     "jsonfile": "^2.3.1",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",

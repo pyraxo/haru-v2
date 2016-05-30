@@ -91,7 +91,7 @@ class Credits extends BaseCommand {
           this.reply('Error fetching credits leaderboard:\n' + err)
           return
         }
-        let ranking = ['```rb', '== DISCORD WEALTH RANKINGS ==']
+        let ranking = ['```rb', '== DISCORD WEALTH RANKINGS (Top 10) ==']
         for (let i = 0, j = 1; i < Math.min(res.length, 20); i += 2, j++) {
           ranking.push([
             `${j}. ${this.client.users.get('id', res[i]).name} - ${res[i + 1]} credits`
