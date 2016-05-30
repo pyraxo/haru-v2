@@ -47,17 +47,18 @@ class Replies extends BaseCommand {
   }
 
   hearExpression (exp) {
-    this.hears(new RegExp(`\^${escape(exp)}\$`, 'i'), () => {
-      if (channels.indexOf(this.channel.id) === -1) return
-      let reply = ''
-      let r = replies[exp]
-      if (Array.isArray(replies[exp])) {
-        reply = r[Math.floor(Math.random() * r.length)]
-      } else {
-        reply = r
-      }
-      this.send(this.channel, this.replaceString(reply))
-    })
+    if (channels.indexOf(this.channel.id) > -1) {
+      this.hears(new RegExp(`\^${escape(exp)}\$`, 'i'), () => {
+        let reply = ''
+        let r = replies[exp]
+        if (Array.isArray(replies[exp])) {
+          reply = r[Math.floor(Math.random() * r.length)]
+        } else {
+          reply = r
+        }
+        this.send(this.channel, this.replaceString(reply))
+      })
+    }
   }
 
   handle () {
@@ -82,10 +83,11 @@ class Replies extends BaseCommand {
       }
     })
 
-    this.hears(/^ay(y+)$/i, matches => {
-      if (channels.indexOf(this.channel.id) === -1) return
-      this.send(this.channel, `lma${Array(matches[1].length + 1).join('o')}`)
-    })
+    if (channels.indexOf(this.channel.id) > -1) {
+      this.hears(/^ay(y+)$/i, matches => {
+        this.send(this.channel, `lma${Array(matches[1].length + 1).join('o')}`)
+      })
+    }
   }
 }
 
