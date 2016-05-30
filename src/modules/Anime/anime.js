@@ -69,13 +69,13 @@ class Anime extends BaseCommand {
           this.genEntry(entries[0])
           return
         }
+        if (entries.length > 10) entries.length = 10
         let reply = ['**Please choose your desired show by entering its number:**']
         entries.forEach((elem, idx) => {
           reply.push(`${idx + 1}. ${elem.title}`)
         })
         this.client.awaitResponse(this.message, reply.join('\n'))
         .then(msg => {
-          if (entries.length > 10) entries.length = 10
           if (!/^\d+$/.test('10')) {
             this.reply('That is an invalid response.')
             return
