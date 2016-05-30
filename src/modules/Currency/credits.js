@@ -160,13 +160,13 @@ class Credits extends BaseCommand {
           this.reply('Error fetching credit claims DB:\n' + err)
           return
         }
-        let amount = Math.floor(Math.random() * 400) + 100
+        let amount = Math.floor(Math.random() * 100) + 50
         if (res) {
           let diff = moment().diff(moment(res), 'hours')
-          if (diff < 24) {
+          if (diff < 3) {
             this.reply(
               'You have claimed your daily credits.\n' +
-              `Check back after **${24 - diff}** hours.`
+              `Check back after **${3 - diff}** hours.`
             )
             return
           } else {

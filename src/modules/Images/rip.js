@@ -18,7 +18,7 @@ class RIP extends BaseCommand {
 
   static get usage () {
     return [
-      ['**rip** [text] - Here lies a dead soul']
+      ['**rip** [text | user] - Here lies a dead soul']
     ]
   }
 
@@ -91,7 +91,6 @@ class RIP extends BaseCommand {
 
   altImage (user) {
     if (ImageCacher.has(user.id)) {
-      console.log(ImageCacher.get(user.id))
       this.genImage(ImageCacher.get(user.id))
     } else {
       base64.base64encoder(user.avatarURL, { string: true }, (err, image) => {
