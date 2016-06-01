@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import moment from 'moment'
 
 import BaseCommand from '../../base/BaseCommand'
 
@@ -35,16 +36,13 @@ class Whois extends BaseCommand {
       roles.push(elem.name)
     })
     return [
-      '```xl',
-      '================ [PROFILE] =================',
-      `Name: ${user.username}`,
-      `ID: ${user.id}`,
-      `Discriminator: ${user.discriminator}`,
+      '```rb',
+      `  User: ${user.username}#${user.discriminator}`,
+      `    ID: ${user.id}`,
       `Status: ${user.status}`,
-      `Game: ${user.game ? user.game.name : 'none'}`,
-      `Bot: ${user.bot}`,
-      `Roles: ${roles.length > 0 ? roles.join(', ') : 'none'}`,
-      '============================================',
+      `  Game: ${user.game ? user.game.name : 'none'}`,
+      `   Bot: ${user.bot}`,
+      ` Roles: ${roles.length > 0 ? roles.join('\n\t\t') : 'none'}`,
       '```'
     ].join('\n')
   }

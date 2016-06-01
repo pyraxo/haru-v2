@@ -10,7 +10,7 @@ import BaseClient from '../base/BaseClient'
 import Stream from './.Music/Stream'
 import YoutubeTrack from './.Music/YoutubeTrack'
 import SoundcloudTrack from './.Music/SoundcloudTrack'
-import FDB from '../../util/FlatDatabase'
+import FDB from '../util/FlatDatabase'
 
 let apiKeys = new FDB(path.join(process.cwd(), 'config/keys.json')).getAll()
 
