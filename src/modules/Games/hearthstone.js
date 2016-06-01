@@ -33,9 +33,12 @@ class Hearthstone extends BaseCommand {
 
   static get usage () {
     return [
-      '- Opens a new Classic Hearthstone pack',
-      'gvg - Opens a new GoG HS pack',
-      'wotog - Opens a new WotOG pack'
+      [
+        'hs - Opens a new Classic Hearthstone pack',
+        'hs **gvg** - Opens a new GoG HS pack',
+        'hs **wotog** - Opens a new WotOG pack',
+        'hs **tgt** - Opens a new TGT pack'
+      ]
     ]
   }
 
