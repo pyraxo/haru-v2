@@ -1,4 +1,3 @@
-
  Isolated Island Demon || isolated_island_oni
  Isolated Island Princess || isolated_island_hime
  Supply Depot Princess || supply_depot_hime

@@ -4,11 +4,15 @@ import _ from 'lodash'
 import prettyjson from 'prettyjson'
 import request from 'superagent'
 import ytdl from 'ytdl-core'
+import path from 'path'
 
 import BaseClient from '../base/BaseClient'
 import Stream from './.Music/Stream'
 import YoutubeTrack from './.Music/YoutubeTrack'
 import SoundcloudTrack from './.Music/SoundcloudTrack'
+import FDB from '../../util/FlatDatabase'
+
+let apiKeys = new FDB(path.join(process.cwd(), 'config/keys.json')).getAll()
 
 class Disco extends BaseClient {
   constructor (container) {
@@ -154,7 +158,7 @@ class Disco extends BaseClient {
 
   queueSC (query, msg) {
     query = query.split(' ').join('_')
-    let cid = this.container.getParam('soundcloud')
+    let cid = apiKeys['soundcloud']
     this.send(msg.channel, ':mag:  Queuing song...')
     .then(msg => {
       request
@@ -450,7 +454,7 @@ class Disco extends BaseClient {
           .get(
             'https://www.googleapis.com/youtube/v3/search?part=snippet&q=' +
             escape(matches[3]) +
-            `&key=${this.container.getParam('google_api')}`
+            `&key=${apiKeys['google_api']}`
           )
           .end((err, res) => {
             if (err) {

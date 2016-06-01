@@ -37,6 +37,7 @@ node_modules
 config/discord.json
 config/redis.json
 config/mal.json
+config/keys.json
 
 # Databases / Storage
 db/replies/reply_channels.json
