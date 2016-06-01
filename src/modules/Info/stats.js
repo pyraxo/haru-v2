@@ -1,7 +1,4 @@
 import BaseCommand from '../../base/BaseCommand'
-import Database from '../../util/Database'
-
-let Stats = new Database('stats')
 
 class Statistics extends BaseCommand {
   static get name () {
@@ -18,48 +15,10 @@ class Statistics extends BaseCommand {
     ]
   }
 
-  checkEntries (entry, cb) {
-    Stats.has(entry, (err, res) => {
-      if (err) {
-        this.logger.error(
-          `${this.sender.name} encountered an error querying entry`, err
-        )
-        this.reply(`Error querying for entries: ${err}`)
-        return
-      }
-      return cb(res)
-    })
-  }
-
-  getEntry (entry, cb) {
-    Stats.get(entry, (err, tags) => {
-      if (err) {
-        this.logger.error(
-          `${this.sender.name} encountered an error fetching entry`, err
-        )
-        this.reply(`Error fetching entry: ${err}`)
-        return
-      }
-      return cb(tags)
-    })
-  }
-
-  setEntry (entry, value, cb) {
-    Stats.set(entry, value, err => {
-      if (err) {
-        this.logger.error(
-          `${this.sender.name} encountered an error saving an entry`, err
-        )
-        this.reply(`Error saving entry: ${err}`)
-        return
-      }
-      return cb(true)
-    })
-  }
-
   handle () {
     this.responds(/^stats$/i, () => {
       let uptime = this.client.uptime
+      let usage = process.memoryUsage()
       this.send(this.channel, [
         '```xl',
         '== Statistics ==',
@@ -69,6 +28,9 @@ class Statistics extends BaseCommand {
         `Cached: ${this.client.servers.length} servers, ` +
         `${this.client.channels.length} channels, ` +
         `${this.client.users.length} users.`,
+        `RAM Usage: ${Math.round(usage.rss / 1000000)} MB`,
+        `Heap Usage: ${Math.round(usage.heapUsed / 1000000)} MB / ` +
+        `${Math.round(usage.heapTotal / 1000000)} MB`,
         '```'
       ].join('\n'))
     })

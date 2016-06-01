@@ -40,7 +40,7 @@ class Anime extends BaseCommand {
       `**Score**: ${entry.score}`,
       `**Episodes**: ${entry.episodes}`,
       `**Status**: ${entry.status}`,
-      `**Type**: ${entry.type || 'None'}`,
+      `**Type**: ${entry.type ? entry.type : 'None'}`,
       `**Start Date**: ${entry.start_date}`,
       `**End Date**: ${entry.end_date}`,
       `**Synopsis**: ${

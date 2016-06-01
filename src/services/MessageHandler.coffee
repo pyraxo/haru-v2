@@ -21,6 +21,7 @@ class MessageHandler
 
   handle: (msg) ->
     if msg.sender.id == @client.user.id then return false
+    if msg.sender.bot == true then return false
     @checkModules msg
 
   checkModules: (msg) ->

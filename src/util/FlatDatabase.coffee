@@ -7,6 +7,6 @@ class FDB extends Container
       @db = jsonfile.readFileSync @filename
     catch
       @db = {}
-      @save
+      @save()
 
 module.exports = FDB
