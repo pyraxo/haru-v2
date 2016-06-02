@@ -88,7 +88,9 @@ class Cockfight extends BaseCommand {
       '```',
       [
         'cockfight <user> - Engages in a cockfight with a user!',
-        'cockfight buy - Buys a :rooster: !'
+        'cockfight buy - Buys a :rooster: !',
+        'cockfight bet <user> <amount> - Bets on a user during a battle!',
+        'cockfight rename - Allows you to rename a :rooster: !'
       ]
     ]
   }
@@ -200,6 +202,23 @@ class Cockfight extends BaseCommand {
   }
 
   handle () {
+    this.responds(/^cockfight$/i, matches => {
+      Den.get(this.sender.id).then(cock => {
+        if (!cock) {
+          this.send(this.channel,
+            `:information_source:  **${this.sender.name}**, you don\'t own a :rooster: yet!\n` +
+            `:arrows_counterclockwise:  To purchase one, type \`${this.prefix}cockfight buy\`.`)
+          return
+        }
+        this.send(this.channel, [
+          `:information_source:  **Cockfight Statistics** for **${this.sender.name}**`,
+          `\`Name\`: **${cock.name}** :rooster:`,
+          `\`Wins\`: ${cock.wins}`,
+          `\`Losses\`: ${cock.losses}`
+        ].join('\n'))
+      })
+    })
+
     this.responds(/^cockfight <@!*(\d+)>$/i, matches => {
       if (this.isPrivate) return false
       let enemID = matches[1]
@@ -285,6 +304,24 @@ class Cockfight extends BaseCommand {
       })
     })
 
+    this.responds(/^cockfight rename$/i, matches => {
+      Den.get(this.sender.id).then(cock => {
+        if (!cock) {
+          this.send(this.channel,
+            `:information_source:  **${this.sender.name}**, you don\'t own a :rooster: yet!\n` +
+            `:arrows_counterclockwise:  To purchase one, type \`${this.prefix}cockfight buy\`.`)
+          return
+        }
+        this.await(this.message,
+          `:information_source:  **${this.sender.name}**, what would you like to rename your :rooster: to?`,
+          msg => { return /^(.+)$/.test(msg.content) }).then(msg => {
+            this.send(this.channel, `Nice name! ${this.sender.name}'s :rooster: is now called **${msg.content}**!`)
+            cock.name = msg.content
+            Den.set(this.sender.id, cock)
+          })
+      })
+    })
+
     this.responds(/^cockfight buy$/i, matches => {
       Den.get(this.sender.id).then(cock => {
         if (cock) {
@@ -312,7 +349,7 @@ class Cockfight extends BaseCommand {
           ].join('\n'), msg => {
             return /^(.+)$/.test(msg.content)
           }).then(msg => {
-            this.send(this.channel, `Nice name! ${this.sender.name}'s new :rooster: is now called **${msg.content}**!`)
+            this.send(this.channel, `Nice name! **${this.sender.name}**'s new :rooster: is now called **${msg.content}**!`)
             let cock = new Cock({ id: this.sender.id, name: msg.content })
             Den.set(this.sender.id, cock).catch(err => {
               if (err) {
