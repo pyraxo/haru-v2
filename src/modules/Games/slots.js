@@ -77,14 +77,13 @@ class Slots extends BaseCommand {
       }
       credits = parseInt(credits, 10)
       if (credits === 0) {
-        this.reply(
-          `You have no remaining funds.`)
+        this.reply(`You have no remaining funds.`)
         return
       } else if (credits < bet) {
         this.reply(
           `You have insufficient funds of only **${credits}** credit(s).\n` +
           `Out of credits? You can use \`${this.prefix}credits claim\` to ` +
-          'get credits every 24 hours'
+          'get credits every 3 hours'
         )
         return
       }

@@ -80,7 +80,8 @@ class Credits extends BaseCommand {
           this.reply('Error fetching credits amount:\n' + err)
           return
         }
-        this.reply(`You have **${parseInt(amt, 10)}** credits.`)
+        this.send(this.channel,
+          `**${this.sender.name}**'s current balance: :credit_card: **${parseInt(amt, 10)}** credits.`)
       })
     })
 
@@ -130,6 +131,7 @@ class Credits extends BaseCommand {
                     return
                   }
                   this.send(recipient, this.generateReceipt(amt, this.sender, recipient, matches[4]))
+                  this.send(this.sender, this.generateReceipt(amt, this.sender, recipient, matches[4]))
                   this.reply(`Sent ${recipient.mention()} **${amt}** credits.`)
                 })
               })

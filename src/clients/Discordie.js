@@ -201,7 +201,7 @@ class Disco extends BaseClient {
     if (stream && stream.playlist.length > 0) {
       let vid = this.streams[guild.id].playlist.shift()
       this.send(
-        this.streams[guild.id].text, `:loud_sound:  Playing ${vid.basicPrint}`
+        this.streams[guild.id].text, `:arrow_forward:  Playing ${vid.basicPrint}`
       )
       this.play(vid, guild, stream.voiceConnection)
       this.streams[guild.id].currentVideo = vid
@@ -233,7 +233,7 @@ class Disco extends BaseClient {
           encoder.once('end', () => {
             this.send(
               this.streams[guild.id].text,
-              `:speaker:  Finished playing ${vid.basicPrint}`
+              `:stop_button:  Finished playing ${vid.basicPrint}`
             )
             this.playNext(guild)
           })
@@ -253,7 +253,7 @@ class Disco extends BaseClient {
         encoder.once('end', () => {
           this.send(
             this.streams[guild.id].text,
-            `:speaker:  Finished playing ${vid.basicPrint}`
+            `:stop_button:  Finished playing ${vid.basicPrint}`
           )
           this.playNext(guild)
         })

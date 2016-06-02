@@ -1,3 +1,4 @@
+import moment from 'moment'
 import _ from 'lodash'
 
 import BaseCommand from '../../base/BaseCommand'
@@ -34,15 +35,20 @@ class Whois extends BaseCommand {
     }).forEach(elem => {
       roles.push(elem.name)
     })
+    let count = 0
+    this.client.servers.map(server => { if (server.members.get('id', user.id)) count++ })
     return [
       '```rb',
-      `  User: ${user.username}#${user.discriminator}`,
-      `    ID: ${user.id}`,
-      `Status: ${user.status}`,
-      `  Game: ${user.game ? user.game.name : 'none'}`,
-      `   Bot: ${user.bot}`,
-      ` Roles: ${roles.length > 0 ? roles.join('\n\t\t') : 'none'}`,
-      '```'
+      `   User: ${user.username}#${user.discriminator}`,
+      `     ID: ${user.id}`,
+      `   Nick: ${this.server.detailsOf(user).nick || 'none'}`,
+      ` Status: ${user.status}`,
+      `Playing: ${user.game ? user.game.name : 'none'}`,
+      user.bot ? `    Bot: ${user.bot}\`\`\`` : '```',
+      `\`Shared servers\`: ${count}`,
+      `\`Created at: ${moment((user.id / 4194304) + 1420070400000).format('ddd, Do MMMM YYYY, h:mm:ss a [GMT]Z')}\``,
+      `\`Joined at: ${moment(this.server.detailsOf(user).joinedAt).format('ddd, Do MMMM YYYY, h:mm:ss a [GMT]Z')}\``,
+      `\`Roles\`: ${roles.length > 0 ? roles.join(', ') : 'none'}`
     ].join('\n')
   }
 

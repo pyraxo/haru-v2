@@ -125,6 +125,22 @@ class BaseCommand {
     )
   }
 
+  await (msg, prompt, check, errMsg) {
+    return new Promise((res, rej) => {
+      this.client.awaitResponse(msg, prompt)
+      .then(ans => {
+        if (check(ans) === true) {
+          return res(ans)
+        } else {
+          errMsg = errMsg ||
+          'That is an invalid response. Please try again.'
+          this.await(ans, errMsg, check, errMsg).then(res).catch(rej)
+        }
+      })
+      .catch(err => rej(err))
+    })
+  }
+
   reply (content, options) {
     if (!this.isPM) {
       content = `${this.sender.mention()}, ${content}`

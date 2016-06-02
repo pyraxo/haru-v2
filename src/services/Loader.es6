@@ -31,7 +31,7 @@ class Loader extends EventEmitter {
   }
 
   get isLoaded () {
-    return this.loaded.discord && this.loaded.clients && this.loaded.config
+    return this.loaded.discord && this.loaded.clients
   }
 
   setLoaded (type) {

@@ -113,7 +113,7 @@ class Tags extends BaseCommand {
               this.send(this.channel, [
                 `:white_check_mark:  Saved tag **${tag}** with text *${text}*`,
                 `Use \`>>${tag}\` to access the saved text!`
-              ])
+              ].join('\n'))
             }
           })
         } else {
@@ -121,7 +121,7 @@ class Tags extends BaseCommand {
             this.reply([
               `The tag **${tag}** already exists!`,
               `To edit a tag, enter __${this.prefix}tags edit **<tag name>** > **<new text>**`
-            ])
+            ].join('\n'))
           } else {
             tags[tag] = text
             this.setEntry(this.server, tags, success => {
@@ -129,7 +129,7 @@ class Tags extends BaseCommand {
                 this.send(this.channel, [
                   `:white_check_mark:  Saved tag **${tag}** with text *${text}*`,
                   `Use \`>>${tag}\` to access the saved text!`
-                ])
+                ].join('\n'))
               }
             })
           }
@@ -155,13 +155,13 @@ class Tags extends BaseCommand {
           this.reply([
             `The tag **${tag}** doesn't exist!`,
             `To create a new tag, enter __${this.prefix}tags create **<tag name>** > **<text>**__`
-          ])
+          ].join('\n'))
         } else {
           if (Object.keys(tags).indexOf(tag) === -1) {
             this.reply([
               `The tag **${tag}** doesn't exist!`,
               `To create a new tag, enter __${this.prefix}tags create **<tag name>** > **<text>**__`
-            ])
+            ].join('\n'))
           } else {
             tags[tag] = text
             this.setEntry(this.server, tags, success => {
@@ -169,7 +169,7 @@ class Tags extends BaseCommand {
                 this.send(this.channel, [
                   `:white_check_mark:  Edited tag **${tag}** to text *${text}*`,
                   `Use \`>>${tag}\` to access the new tag!`
-                ])
+                ].join('\n'))
               }
             })
           }
@@ -194,20 +194,20 @@ class Tags extends BaseCommand {
           this.reply([
             `The tag **${tag}** doesn't exist!`,
             `To create a new tag, enter __${this.prefix}tags create **<tag name>** > **<text>**__`
-          ])
+          ].join('\n'))
         } else {
           if (Object.keys(tags).indexOf(tag) === -1) {
             this.reply([
               `The tag **${tag}** doesn't exist!`,
               `To create a new tag, enter __${this.prefix}tags create **<tag name>** > **<text>**__`
-            ])
+            ].join('\n'))
           } else {
             delete tags[tag]
             this.setEntry(this.server, tags, success => {
               if (success === true) {
                 this.send(this.channel, [
                   `:white_check_mark:  Deleted tag **${tag}**`
-                ])
+                ].join('\n'))
               }
             })
           }
