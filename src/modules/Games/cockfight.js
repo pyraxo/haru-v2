@@ -68,7 +68,7 @@ class Cockfight extends BaseCommand {
       bets.forEach(bet => {
         Banker.addCredits(bet.user, bet.amount)
         this.send(this.channel,
-          `:moneybag:  **${this.client.users.get(bet.user)}** has won **${bet.amount}** credits!`)
+          `:moneybag:  **${this.client.users.get('id', bet.user).name}** has won **${bet.amount}** credits!`)
       })
     })
 
@@ -76,7 +76,7 @@ class Cockfight extends BaseCommand {
       bets.forEach(bet => {
         Banker.delCredits(bet.user, bet.amount)
         this.send(this.channel,
-          `:money_with_wings:  **${this.client.users.get(bet.user)}** has lost **${bet.amount}** credits!`)
+          `:money_with_wings:  **${this.client.users.get('id', bet.user).name}** has lost **${bet.amount}** credits!`)
       })
     })
   }
