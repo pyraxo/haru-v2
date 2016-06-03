@@ -92,7 +92,7 @@ class Credits extends BaseCommand {
           this.reply('Error fetching credits leaderboard:\n' + err)
           return
         }
-        let ranking = ['```rb', '== DISCORD WEALTH RANKINGS (Top 10) ==']
+        let ranking = ['```rb', '== Discord\'s Wealthiest (Top 10) ==']
         for (let i = 0, j = 1; i < Math.min(res.length, 20); i += 2, j++) {
           ranking.push([
             `${j}. ${this.client.users.get('id', res[i]).name} - ${res[i + 1]} credits`
@@ -115,7 +115,8 @@ class Credits extends BaseCommand {
           }
           if (res) {
             if (parseInt(res, 10) < amt) {
-              this.reply(`You have insufficient (**${res}**) credits.`)
+              this.send(this.channel,
+                `:information_source:  **${this.sender.name}**, you have insufficient (**${res}**) credits.`)
               return
             } else {
               Banker.delCredits(this.sender, matches[3], (err, res) => {
@@ -132,7 +133,8 @@ class Credits extends BaseCommand {
                   }
                   this.send(recipient, this.generateReceipt(amt, this.sender, recipient, matches[4]))
                   this.send(this.sender, this.generateReceipt(amt, this.sender, recipient, matches[4]))
-                  this.reply(`Sent ${recipient.mention()} **${amt}** credits.`)
+                  this.send(this.channel,
+                    `:atm:  **${this.sender.name}**, sent ${recipient.mention()} **${amt}** credits.`)
                 })
               })
             }
@@ -166,8 +168,8 @@ class Credits extends BaseCommand {
         if (res) {
           let diff = moment().diff(moment(res), 'hours')
           if (diff < 3) {
-            this.reply(
-              'You have claimed your daily credits.\n' +
+            this.send(this.channel,
+              `:information_source:  **${this.sender.name}**, you have claimed your free credits.\n` +
               `Check back after **${3 - diff}** hours.`
             )
             return
@@ -186,7 +188,7 @@ class Credits extends BaseCommand {
                 return
               }
               this.send(this.channel,
-                `**${amount}** credits added to ${this.sender.mention()}'s account.`
+                `:atm:  **${amount}** credits added to **${this.sender.name}**'s account.`
               )
             })
           }
@@ -205,7 +207,7 @@ class Credits extends BaseCommand {
               return
             }
             this.send(this.channel,
-              `**${amount}** credits added to ${this.sender.mention()}'s account.`
+              `:atm:  **${amount}** credits added to **${this.sender.name}**'s account.`
             )
           })
         }
