@@ -290,15 +290,15 @@ class Cockfight extends BaseCommand {
                   `:negative_squared_cross_mark:  **${this.sender.name}**, that user does not have enough credits to fight you!`)
                 return
               }
+              this.listen()
+              let arena = new Arena({
+                id: this.channel.id,
+                player1: player.id,
+                player2: enemy.id,
+                waiting: enemy.id
+              })
+              Den.register(this.channel.id, arena)
             })
-            this.listen()
-            let arena = new Arena({
-              id: this.channel.id,
-              player1: player.id,
-              player2: enemy.id,
-              waiting: enemy.id
-            })
-            Den.register(this.channel.id, arena)
           })
         })
       })
