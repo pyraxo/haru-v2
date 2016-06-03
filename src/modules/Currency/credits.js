@@ -169,8 +169,8 @@ class Credits extends BaseCommand {
           let diff = moment().diff(moment(res), 'hours')
           if (diff < 3) {
             this.send(this.channel,
-              `:information_source:  **${this.sender.name}**, you have claimed your free credits.\n` +
-              `Check back after **${3 - diff}** hours.`
+              `:information_source:  **${this.sender.name}**, you have recently claimed your free credits.\n` +
+              `:arrows_counterclockwise:  Check back after **${3 - diff}** hours.`
             )
             return
           } else {
