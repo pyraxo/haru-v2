@@ -16,7 +16,7 @@ class MessageHandler
           delete @modules[module][command]
 
   reloadModules: ->
-    cr.all()
+    cr(key) if key.startsWith path.join process.cwd(), 'lib' for key in Object.keys require.cache
     @getModules()
 
   handle: (msg) ->

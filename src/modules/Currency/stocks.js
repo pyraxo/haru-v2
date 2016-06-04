@@ -22,13 +22,14 @@ class Stocks extends BaseCommand {
       request
       .get(`http://www.google.com/finance/info?q=${symbol}`)
       .end((err, res) => {
-        if (err) {
-          this.logger.error(
-            `Error fetching stock $${symbol.toUpperCase()}: `, err
+        if (res.statusCode === 400) {
+          this.send(this.channel,
+            `:negative_squared_cross_mark:  Stock **$${symbol.toUpperCase()}** does not exist, **${this.sender.name}**!`
           )
-          return this.reply(
-            `**Error**: Stock $${symbol.toUpperCase()} met with ${err}`
-          )
+          return
+        } else if (err) {
+          this.reply(`**Error**: Fetching ${symbol.toUpperCase()} met with ${err}`)
+          return
         }
         res = JSON.parse(res.text.replace('//', ''))[0]
         this.send(this.channel, [
