@@ -67,7 +67,7 @@ class Love extends BaseCommand {
     })
 
     this.responds(/^love (.+)$/i, matches => {
-      let content = _.trim(matches[1].replace(/<@(\d+)>/gi, (match, p1) => {
+      let content = _.trim(matches[1].replace(/<@!*(\d+)>/gi, (match, p1) => {
         let user = this.client.users.get('id', p1)
         if (user) {
           return user.name

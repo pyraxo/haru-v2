@@ -226,6 +226,7 @@ class Cockfight extends BaseCommand {
       if (matches[1] === this.sender.id) {
         this.send(this.channel,
           `:information_source:  **${this.sender.name}**, you can\'t challenge yourself!!`)
+        return
       }
       if (!user) {
         this.send(this.channel, `:information_source:  **${this.sender.name}**, that user doesn\'t exist in my records!`)
