@@ -155,12 +155,14 @@ class Den extends EventEmitter {
     let arena = this.getArena(id)
     if (arena) {
       switch (player) {
-        case arena.player1:
+        case arena.player1: {
           arena.bets[arena.player1].push(bet)
           break
-        case arena.player2:
+        }
+        case arena.player2: {
           arena.bets[arena.player2].push(bet)
           break
+        }
         default:
           return false
       }
