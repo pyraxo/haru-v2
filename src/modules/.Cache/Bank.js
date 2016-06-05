@@ -10,6 +10,7 @@ class Bank extends SDB {
 
   initUser (user, cb) {
     if (typeof user === 'object') user = user.id
+    console.log('Creating new account: ' + user)
     this.set(user, 100, (err, res) => {
       if (err) {
         cb(err, res)
@@ -25,7 +26,7 @@ class Bank extends SDB {
       if (!err) {
         if (res) {
           cb(null, res)
-        } else {
+        } else if (res === null) {
           this.initUser(user, cb)
         }
       }
@@ -43,7 +44,7 @@ class Bank extends SDB {
   }
 
   delCredits (user, amt, cb) {
-    this.addCredits(user, parseInt(-amt, 10), cb)
+    this.addCredits(user, -parseInt(amt, 10), cb)
   }
 
   sortRank (top, cb) {
