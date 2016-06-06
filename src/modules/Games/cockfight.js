@@ -418,7 +418,7 @@ class Cockfight extends BaseCommand {
         }
         if (amount > 5000) {
           amount = 5000
-          this.send(this.channel, ':arrows_counterclockwise:  **${this.sender.name}**,  maximum bet is **5000** credits. Betting that amount.')
+          this.send(this.channel, `:arrows_counterclockwise:  **${this.sender.name}**,  maximum bet is **5000** credits. Betting that amount.`)
         }
         if (credits < amount) {
           this.send(this.channel,
