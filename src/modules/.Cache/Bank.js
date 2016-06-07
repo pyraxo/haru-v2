@@ -24,9 +24,10 @@ class Bank extends SDB {
     if (typeof user === 'object') user = user.id
     this.get(user, (err, res) => {
       if (!err) {
-        if (res) {
+        if (res !== null) {
           cb(null, res)
-        } else if (res === null) {
+        } else if (res) {
+          console.log('Creating new account from null res: ' + user, res)
           this.initUser(user, cb)
         }
       }
