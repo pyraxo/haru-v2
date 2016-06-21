@@ -70,7 +70,7 @@ class Replies extends BaseCommand {
       }
       this.reply([
         'List of expressions that will trigger a reply:',
-        `\`ayy, ${reply.join(', ')}\``
+        `\`ayy, wew, ${reply.join(', ')}\``
       ].join('\n'))
     })
 
@@ -87,6 +87,10 @@ class Replies extends BaseCommand {
     if (rc.has(this.channel.id)) {
       this.hears(/^ay(y+)$/i, matches => {
         this.send(this.channel, `lma${Array(matches[1].length + 1).join('o')}`)
+      })
+
+      this.hears(/^we(w+)$/i, matches => {
+        this.send(this.channel, `la${Array(matches[1].length).join('d')}`)
       })
     }
   }
