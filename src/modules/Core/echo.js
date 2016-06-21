@@ -17,6 +17,10 @@ class Echo extends BaseCommand {
     ]
   }
 
+  get adminOnly () {
+    return true
+  }
+
   handle () {
     this.responds(/^echo$/i, matches => {
       this.reply('No given input to echo!')
