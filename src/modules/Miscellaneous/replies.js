@@ -90,7 +90,7 @@ class Replies extends BaseCommand {
       })
 
       this.hears(/^we(w+)$/i, matches => {
-        this.send(this.channel, `la${Array(matches[1].length).join('d')}`)
+        this.send(this.channel, `la${Array(matches[1].length + 1).join('d')}`)
       })
     }
   }
