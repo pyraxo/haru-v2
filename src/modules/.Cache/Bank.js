@@ -26,7 +26,7 @@ class Bank extends SDB {
       if (!err) {
         if (res !== null) {
           cb(null, res)
-        } else if (res) {
+        } else {
           console.log('Creating new account from null res: ' + user, res)
           this.initUser(user, cb)
         }
