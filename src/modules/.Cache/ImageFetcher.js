@@ -7,7 +7,7 @@ module.exports = function imageSearch (board, query, val) {
     'danbooru': 'http://danbooru.donmai.us/posts.json?limit=1' +
     '&page=1&tags=order:random+',
     'gelbooru': 'http://gelbooru.com/index.php?page=dapi' +
-    '&s=post&q=index&limit=1&json=1&tags=',
+    '&s=post&q=index&json=1&tags=',
     'yandere': 'https://yande.re/post/index.json?limit=1' +
     '&page=1&tags=order:random+',
     'konachan': 'http://konachan.com/post/index.json?tags=order:random+'

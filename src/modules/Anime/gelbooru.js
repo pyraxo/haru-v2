@@ -32,13 +32,7 @@ class Gelbooru extends BaseCommand {
   }
 
   fetchResults (res, query) {
-    let r = []
-    try {
-      r = JSON.parse(res.text)[0]
-    } catch (err) {
-      this.noPictures(query)
-      return
-    }
+    let r = res[~~(Math.random() * res.length)]
     if (r && r.file_url) {
       this.send(this.channel, [
         `**Score**: ${r.score}`,
@@ -49,12 +43,38 @@ class Gelbooru extends BaseCommand {
     this.reducePage(query)
   }
 
-  getImage (query, pid) {
-    pid = pid || 10000
-    img('gelbooru', query, this, `pid=${Math.floor(Math.random() * pid)}`)
-    .then(res => {
-      this.fetchResults(res, query)
-    })
+  getImage (query, pass) {
+    if (pass === true) {
+      img('gelbooru', query, this, `pid=${Math.floor(Math.random() * 500)}`)
+      .then(res => {
+        try {
+          res = JSON.parse(res.text)
+        } catch (err) {
+          this.noPictures(query)
+          return
+        }
+        if (res.length === 0) {
+          this.getImage(query, false)
+        } else {
+          this.fetchResults(res, query)
+        }
+      })
+    } else {
+      img('gelbooru', query, this)
+      .then(res => {
+        try {
+          res = JSON.parse(res.text)
+        } catch (err) {
+          this.noPictures(query)
+          return
+        }
+        if (res.length < 100) {
+          this.fetchResults(res, query)
+        } else {
+          this.getImage(query, true)
+        }
+      })
+    }
   }
 
   handle () {
